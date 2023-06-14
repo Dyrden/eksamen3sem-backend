@@ -1,6 +1,7 @@
 package kea.dat22v2.mdd.eksamen3sem.app.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import lombok.*;
@@ -23,6 +24,7 @@ public class Event {
 
     private String name;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime date;
 
     private String description;

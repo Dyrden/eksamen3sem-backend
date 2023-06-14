@@ -13,10 +13,6 @@ import java.util.List;
 @CrossOrigin
 public class EventController {
 
-
-
-
-
     EventService service;
 
     public EventController(EventService service) {

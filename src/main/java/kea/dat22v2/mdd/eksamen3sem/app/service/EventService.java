@@ -3,6 +3,7 @@ package kea.dat22v2.mdd.eksamen3sem.app.service;
 
 import kea.dat22v2.mdd.eksamen3sem.app.dto.EventRequest;
 import kea.dat22v2.mdd.eksamen3sem.app.dto.EventResponse;
+import kea.dat22v2.mdd.eksamen3sem.app.entity.Event;
 import kea.dat22v2.mdd.eksamen3sem.app.exception.NotYetImplementedException;
 import kea.dat22v2.mdd.eksamen3sem.app.repository.EventRepository;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class EventService {
 
 
     public List<EventResponse> findAllEvents() {
-        throw new NotYetImplementedException("TODO");
+        return repository.findAll().stream().map(EventResponse::new).toList();
     }
 
     public EventResponse findEvent(Integer id) {
@@ -28,7 +29,9 @@ public class EventService {
     }
 
     public EventResponse addEvent(EventRequest request) {
-        throw new NotYetImplementedException("TODO");
+        // add checks?
+        Event event = EventRequest.getEventEntity(request);
+        return new EventResponse(repository.save(event));
     }
 
     public EventResponse updateEvent(Integer id, EventRequest request) {
