@@ -4,6 +4,7 @@ package kea.dat22v2.mdd.eksamen3sem.app.service;
 import kea.dat22v2.mdd.eksamen3sem.app.dto.EventRequest;
 import kea.dat22v2.mdd.eksamen3sem.app.dto.EventResponse;
 import kea.dat22v2.mdd.eksamen3sem.app.entity.Event;
+import kea.dat22v2.mdd.eksamen3sem.app.exception.EventNotFoundException;
 import kea.dat22v2.mdd.eksamen3sem.app.exception.NotYetImplementedException;
 import kea.dat22v2.mdd.eksamen3sem.app.repository.EventRepository;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,8 @@ public class EventService {
     }
 
     public EventResponse findEvent(Integer id) {
-        throw new NotYetImplementedException("TODO");
+        Event event = repository.findById(id).orElseThrow(() -> new EventNotFoundException("Could not find event by : " + id));
+        return new EventResponse(event);
     }
 
     public EventResponse addEvent(EventRequest request) {
