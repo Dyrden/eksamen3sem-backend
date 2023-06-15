@@ -21,22 +21,27 @@ public class EventAttendee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-//?? skal vi have dem her?
     @CreationTimestamp
-    private LocalDateTime created;
+    private LocalDateTime register;
 
     @UpdateTimestamp
     private LocalDateTime updated;
 
-    private LocalDateTime register;
-
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     private Event event;
 
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     private Attendee attendee;
 
 
+    public void setEvent(Event event) {
+        this.event = event;
+        event.addEventAttendee(this);
+    }
 
+    public void setAttendee(Attendee attendee) {
+        this.attendee = attendee;
+        attendee.addEventAttendee(this);
+    }
 }

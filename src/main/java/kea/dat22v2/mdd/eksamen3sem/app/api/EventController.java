@@ -2,6 +2,7 @@ package kea.dat22v2.mdd.eksamen3sem.app.api;
 
 import kea.dat22v2.mdd.eksamen3sem.app.dto.EventRequest;
 import kea.dat22v2.mdd.eksamen3sem.app.dto.EventResponse;
+import kea.dat22v2.mdd.eksamen3sem.app.entity.EventStatus;
 import kea.dat22v2.mdd.eksamen3sem.app.service.EventService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,17 @@ public class EventController {
 
     @GetMapping("/{id}")
     public ResponseEntity<EventResponse> findEvent(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok().body(service.findEvent(id));
+        return ResponseEntity.ok().body(service.findEvent(id, false));
+    }
+
+    @GetMapping("/{name}")
+    public ResponseEntity<EventResponse> findEventByName(@PathVariable("name") String name) {
+        return ResponseEntity.ok().body(service.findEventByName(name, false));
+    }
+
+    @GetMapping("/{id}/{includeAll}")
+    public ResponseEntity<EventResponse> findEventToEdit(@PathVariable("id") Integer id, @PathVariable("includeAll") Boolean includeAll) {
+        return ResponseEntity.ok().body(service.findEvent(id, includeAll));
     }
 
     @PostMapping
@@ -40,8 +51,14 @@ public class EventController {
         return ResponseEntity.ok().body(service.updateEvent(id,request));
     }
 
+    @PatchMapping("/{id}/{eventStatus}")
+    public ResponseEntity<EventResponse> updateEventStatus(@PathVariable("id") Integer id, @PathVariable("eventStatus") EventStatus eventStatus) {
+        return ResponseEntity.ok().body(service.updateEventStatus(id,eventStatus));
+
+    }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<EventResponse> deleteEvent(@PathVariable("id") Integer id) {
+    public ResponseEntity<Boolean> deleteEvent(@PathVariable("id") Integer id) {
         return ResponseEntity.ok().body(service.deleteEvent(id));
     }
 }

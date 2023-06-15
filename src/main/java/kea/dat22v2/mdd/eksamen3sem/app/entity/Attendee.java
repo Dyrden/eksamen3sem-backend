@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -25,7 +26,7 @@ public class Attendee {
     private String phoneNumber;
 
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "attendee", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "attendee", fetch = FetchType.LAZY)
     private List<EventAttendee> eventAttendees;
 
 
@@ -36,5 +37,10 @@ public class Attendee {
     private LocalDateTime updated;
 
 
-
+    public void addEventAttendee(EventAttendee eventAttendee) {
+        if (eventAttendees == null) {
+            eventAttendees = new ArrayList<>();
+        }
+        eventAttendees.add(eventAttendee);
+    }
 }

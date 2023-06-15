@@ -1,6 +1,8 @@
 package kea.dat22v2.mdd.eksamen3sem.app.api;
 
 
+import kea.dat22v2.mdd.eksamen3sem.app.exception.AttendeeNotFoundException;
+import kea.dat22v2.mdd.eksamen3sem.app.exception.EventAtCapacityException;
 import kea.dat22v2.mdd.eksamen3sem.app.exception.EventNotFoundException;
 import kea.dat22v2.mdd.eksamen3sem.app.exception.NotYetImplementedException;
 import org.springframework.http.HttpStatus;
@@ -22,4 +24,16 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleEventNotFoundException(EventNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", ex.getMessage()));
     }
+    @ExceptionHandler(AttendeeNotFoundException.class)
+    public ResponseEntity<Object> handleAttendeeNotFoundException(AttendeeNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", ex.getMessage()));
+    }
+    @ExceptionHandler(EventAtCapacityException.class)
+    public ResponseEntity<Object> handleEventAtCapacityException(EventAtCapacityException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("message", ex.getMessage()));
+    }
+
+
+
+
 }
